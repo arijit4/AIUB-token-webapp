@@ -1,3 +1,11 @@
 .error {
     color: red;
 }
+
+input[type="submit"] {
+    background-color: blue;
+    color: white;
+    padding: 8px 16px;
+    border: white 0 solid;
+    border-radius: 8px;
+}
