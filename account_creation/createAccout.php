@@ -1,3 +1,9 @@
+<?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        echo "<h1>Account created successfully</h1>";
+        header('Location: ../dashboard/adminDashboard.php');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
