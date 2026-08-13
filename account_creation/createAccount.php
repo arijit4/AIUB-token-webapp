@@ -1,4 +1,5 @@
 <?php
+    # should add session codes here...
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<h1>Account created successfully</h1>";
         header('Location: ../dashboard/adminDashboard.php');
@@ -13,7 +14,7 @@
 </head>
 <body>
 <h1>Create your account</h1>
-<form onsubmit="return validateDets()" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+<form onsubmit="return validateDets()" action="./creationHandler.php" method="POST">
     <table>
         <tr>
             <td>Name</td>
