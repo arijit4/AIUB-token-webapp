@@ -44,7 +44,7 @@ if ($errors == 0) {
 
     appendToDB($newData);
 
-    header("location: ../dashboard/adminDashboard.php");
+    header("location: ../pages/admin/dashboard.php");
 } else {
     header("location: ./createAccount.php");
 }

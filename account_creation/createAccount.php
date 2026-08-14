@@ -2,7 +2,7 @@
 # should add session codes here...
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<h1>Account created successfully</h1>";
-    header('Location: ../dashboard/adminDashboard.php');
+    header('Location: ../dashboard/dashboard.php');
 }
 ?>
 <!DOCTYPE html>

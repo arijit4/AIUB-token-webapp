@@ -3,15 +3,11 @@ session_start();
 if (isset($_SESSION['username'])) {
     if ($_SESSION['role'] == 'admin') {
         header("Location: adminHome.php");
-    }
-    else if ($_SESSION['role'] == 'student') {
-        header("Location: studentHome.php");
-    }
-    else if ($_SESSION['role'] == 'teacher') {
+    } else if ($_SESSION['role'] == 'student') {
+        header("Location: dashboard.php");
+    } else if ($_SESSION['role'] == 'teacher') {
         header("Location: teacherHome.php");
-    }
-
-    else if ($_SESSION['role'] == 'supervisor') {
+    } else if ($_SESSION['role'] == 'supervisor') {
         header("Location: supervisorHome.php");
     }
     exit();

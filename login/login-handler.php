@@ -23,17 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if ($user['role'] == 'admin') {
                 header("Location: adminHome.php");
-            }
-
-            else if ($user['role'] == 'student') {
-                header("Location: studentHome.php");
-            }
-
-            else if ($user['role'] == 'teacher') {
+            } else if ($user['role'] == 'student') {
+                header("Location: dashboard.php");
+            } else if ($user['role'] == 'teacher') {
                 header("Location: teacherHome.php");
-            }
-
-            else if ($user['role'] == 'supervisor') {
+            } else if ($user['role'] == 'supervisor') {
                 header("Location: supervisorHome.php");
             }
 
