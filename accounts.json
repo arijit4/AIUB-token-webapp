@@ -4,5 +4,11 @@
         "id": "24-57775-2",
         "pass": "123",
         "role": "student"
+    },
+    {
+        "name": "XYZ",
+        "id": "1111-2222-3",
+        "pass": "123",
+        "role": "teacher"
     }
 ]
