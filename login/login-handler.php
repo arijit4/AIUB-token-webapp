@@ -1,46 +1,54 @@
 <?php
 
 session_start();
+/*
+ function getUsersFromDB(): array
+{
+    // read from accounts.json temporarily
+    // fetch from the db when available.
+}
 
+$users = getUsersFromDB();
+ * */
 $users = [
-    ["username" => "1", "password" => "123", "role" => "admin"],
-    ["username" => "2", "password" => "456", "role" => "student"],
-    ["username" => "3", "password" => "789", "role" => "teacher"],
-    ["username" => "4", "password" => "1234", "role" => "supervisor"]
+    ["id" => "1", "password" => "123", "role" => "admin"],
+    ["id" => "2", "password" => "456", "role" => "student"],
+    ["id" => "3", "password" => "789", "role" => "teacher"],
+    ["id" => "4", "password" => "1234", "role" => "supervisor"]
 ];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $username = strtolower(trim($_POST['username']));
+    $id = strtolower(trim($_POST['id']));
     $password = trim($_POST['password']);
 
     foreach ($users as $user) {
 
-        if ($user['username'] == $username && $user['password'] == $password) {
+        if ($user['id'] == $id && $user['password'] == $password) {
 
-            $_SESSION['username'] = $user['username'];
+            $_SESSION['id'] = $user['id'];
             $_SESSION['role'] = $user['role'];
 
             if ($user['role'] == 'admin') {
-                header("Location: adminHome.php");
+                header("Location: ../pages/admin/dashboard.php");
             } else if ($user['role'] == 'student') {
-                header("Location: dashboard.php");
+                header("Location: ../pages/student/dashboard.php");
             } else if ($user['role'] == 'teacher') {
-                header("Location: teacherHome.php");
+                header("Location: ../pages/teacher/dashboard.php");
             } else if ($user['role'] == 'supervisor') {
-                header("Location: supervisorHome.php");
+                header("Location: ../pages/supervisor/dashboard.php");
             }
 
             exit();
         }
     }
 
-    $_SESSION['error_message'] = "Invalid username or password";
+    $_SESSION['error_message'] = "Invalid id or password";
 
-    header("Location: login.php");
+    header("Location: ../../login/login.php");
     exit();
 } else {
-    header("Location: login.php");
+    header("Location: ../../login/login.php");
 }
 
 ?>

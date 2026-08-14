@@ -1,11 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['id'])) {
     header("Location: login.php");
     exit();
 }
 if ($_SESSION['role'] != 'student') {
-    header('Location: ' . $_SESSION['role'] . 'Home.php');
+    header('Location: ./' . $_SESSION['role'] . '/dashboard.php');
     exit();
 }
 ?>
