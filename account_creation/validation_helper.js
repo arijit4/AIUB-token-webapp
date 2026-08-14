@@ -12,20 +12,22 @@ function validateDets() {
     // Invalid if it matches neither the student nor the teacher pattern
     if (!student_account_pattern.test(id) && !teacher_account_pattern.test(id)) {
         errors++;
-        document.getElementById('err_id').innerText = "Invalid ID"
+        document.getElementById('err_id').innerText = "Invalid ID";
     } else {
-        document.getElementById('err_id').innerText = ""
+        document.getElementById('err_id').innerText = "";
     }
+
     if (pass.length === 0) {
         errors++;
-        document.getElementById('err_pass').innerText = "Password can't be empty"
+        document.getElementById('err_pass').innerText = "Password can't be empty";
     } else {
-        document.getElementById('err_pass').innerText = ""
+        document.getElementById('err_pass').innerText = "";
     }
+
     if (pass !== cpass) {
-        document.getElementById('err_cpass').innerText = "Passwords do not match"
+        document.getElementById('err_cpass').innerText = "Passwords do not match";
     } else {
-        document.getElementById('err_cpass').innerText = ""
+        document.getElementById('err_cpass').innerText = "";
     }
     return (errors <= 0);
 }
