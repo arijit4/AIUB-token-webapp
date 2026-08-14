@@ -29,7 +29,7 @@ if ($_SESSION['role'] != 'student') {
 <a href="report-absence.php">
     <h3>Report Absence</h3>
 </a>
-<form action="logout.php" method="post">
+<form action="../login/logout.php" method="post">
     <input type="submit" value="Logout">
 </form>
 </body>
