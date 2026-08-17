@@ -4,7 +4,7 @@ if (!isset($_SESSION['id'])) {
     header("Location: login.php");
     exit();
 }
-if ($_SESSION['role'] != 'student') {
+if ($_SESSION['role'] !== 'student') {
     header('Location: ./' . $_SESSION['role'] . '/dashboard.php');
     exit();
 }
@@ -15,9 +15,11 @@ if ($_SESSION['role'] != 'student') {
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Student's Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+
 </head>
 <body>
-<h1>Hello student, <?php echo $_SESSION['username'] ?></h1>
+<h1>Hello student, <?php echo $_SESSION['id'] ?></h1>
 <a href="apply-token.php">
     <h3>Apply for Token</h3>
 </a>

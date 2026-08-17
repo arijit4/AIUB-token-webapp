@@ -1,21 +1,38 @@
 <?php
 
 session_start();
-/*
- function getUsersFromDB(): array
+
+function getUsersFromDB(): array
 {
-    // read from accounts.json temporarily
-    // fetch from the db when available.
+    $file = __DIR__ . '/../accounts.json';
+
+    if (!file_exists($file)) {
+        return [];
+    }
+
+    $jsonString = file_get_contents($file);
+    $users = json_decode($jsonString, true);
+
+    if (!is_array($users)) {
+        return [];
+    }
+
+    return array_values(array_map(function ($user) {
+        if (!is_array($user)) {
+            return [];
+        }
+
+        return [
+            'name' => $user['name'] ?? '',
+            'id' => strtolower(trim($user['id'] ?? '')),
+            'password' => $user['password'] ?? ($user['pass'] ?? ''),
+            'role' => $user['role'] ?? ''
+        ];
+    }, $users));
+
 }
 
 $users = getUsersFromDB();
- * */
-$users = [
-    ["id" => "1", "password" => "123", "role" => "admin"],
-    ["id" => "2", "password" => "456", "role" => "student"],
-    ["id" => "3", "password" => "789", "role" => "teacher"],
-    ["id" => "4", "password" => "1234", "role" => "supervisor"]
-];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -25,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     foreach ($users as $user) {
 
         if ($user['id'] == $id && $user['password'] == $password) {
-
+            $_SESSION['id'] = $user['id'];
             $_SESSION['id'] = $user['id'];
             $_SESSION['role'] = $user['role'];
 
