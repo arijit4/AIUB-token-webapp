@@ -3,22 +3,6 @@ require_once "../model/user.php";
 session_start();
 function appendToDB($data): void
 {
-//    $currentData = [];
-//    $file = "../accounts.json";
-//
-//    if (file_exists($file)) {
-//        $jsonString = file_get_contents($file);
-//
-//        $currentData = json_decode($jsonString, true);
-//
-//        if (!is_array($currentData)) {
-//            $currentData = [];
-//        }
-//    }
-//
-//    $currentData[] = $data;
-//    $updatedJsonString = json_encode($currentData, JSON_PRETTY_PRINT);
-//    file_put_contents($file, $updatedJsonString, LOCK_EX);
     $user = new User();
     $user->create_user($data['name'], $data['id'], $data['pass'], $data['role']);
 }
