@@ -15,7 +15,7 @@ class User
     {
         $already_exists = $this->user_already_exists($uni_id);
         if (!$already_exists) {
-            $stmt = $this->conn->prepare("INSERT INTO user (uni_id, fullname, password, role) VALUES (?, ?, ?, ?)");
+            $stmt = $this->conn->prepare("INSERT INTO users (uni_id, fullname, password, role) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("ssss", $uni_id, $fullname, $password, $role);
             return $stmt->execute();
         }
@@ -24,7 +24,7 @@ class User
 
     public function user_already_exists($uni_id): bool
     {
-        $stmt = $this->conn->prepare("SELECT uni_id FROM user WHERE uni_id = ?");
+        $stmt = $this->conn->prepare("SELECT uni_id FROM users WHERE uni_id = ?");
         $stmt->bind_param("s", $uni_id);
         $stmt->execute();
         $user = $stmt->get_result()->fetch_assoc();

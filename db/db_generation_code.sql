@@ -3,13 +3,15 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 25, 2026 at 08:09 PM
+-- Generation Time: Aug 25, 2026 at 08:58 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET
+SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET
+time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -24,34 +26,35 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `user` (
-                        `id` int(11) NOT NULL,
-                        `uni_id` text NOT NULL,
-                        `fullname` text NOT NULL,
-                        `password` text NOT NULL,
-                        `created_at` date NOT NULL DEFAULT current_timestamp(),
-                        `role` text NOT NULL
+CREATE TABLE `users`
+(
+    `id`         int(11) NOT NULL,
+    `uni_id`     text     NOT NULL,
+    `fullname`   text     NOT NULL,
+    `password`   text     NOT NULL,
+    `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+    `role`       text     NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `user` (`id`, `uni_id`, `fullname`, `password`, `created_at`, `role`) VALUES
-                                                                                      (2, 'Ami2', '22-57775-2', '123', '2026-08-26', 'student'),
-                                                                                      (3, 'Abaro', '22-11111-2', '123', '2026-08-26', 'student');
+INSERT INTO `users` (`id`, `uni_id`, `fullname`, `password`, `created_at`, `role`)
+VALUES (5, '24-57775-2', 'arijit', '123', '2026-08-26 00:56:31', 'student'),
+       (6, '2412-2509-2', 'Sajid Uddin', 'abc', '2026-08-26 00:57:33', 'teacher');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `user`
+-- Indexes for table `users`
 --
-ALTER TABLE `user`
+ALTER TABLE `users`
     ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id` (`id`);
 
@@ -60,10 +63,10 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `user`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `users`
+    MODIFY `id` int (11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
