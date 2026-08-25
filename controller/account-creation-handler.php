@@ -49,9 +49,8 @@ if ($errors == 0) {
     }
 
     appendToDB($newData);
-    echo "location: ../view/" . $newData['role'] . "_dashboard.php";
-//    header("location: ../view/" . $newData['role'] . "_dashboard.php");
-//    exit();
+    header("location: ../view/" . $newData['role'] . "_dashboard.php");
+    exit();
 } else {
     header("location: ../view/create-account.php");
     exit();
