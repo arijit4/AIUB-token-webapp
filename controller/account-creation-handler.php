@@ -1,10 +1,10 @@
 <?php
 require_once "../model/user.php";
 session_start();
-function appendToDB($data): void
+function appendToDB($data): bool
 {
     $user = new User();
-    $user->create_user($data['name'], $data['id'], $data['pass'], $data['role']);
+    return $user->create_user($data['name'], $data['id'], $data['pass'], $data['role']);
 }
 
 $name = $_POST["name"];
@@ -16,15 +16,23 @@ $errors = 0;
 $student_account_pattern = '/^\d{2}-\d{5}-[1-3]$/';
 $teacher_account_pattern = '/^\d{4}-\d{4}-[1-3]$/';
 
-if ($id == "") {
+if (empty($name)) {
+    $errors++;
+    $_SESSION["error_name"] = "Invalid name. Name cannot be empty.";
+}
+if ($id == "" || (!preg_match($student_account_pattern, $id) && !preg_match($teacher_account_pattern, $id))) {
     $errors++;
     $_SESSION["error_id"] = "Invalid ID or Password";
 }
-if (!preg_match($student_account_pattern, $id) && !preg_match($teacher_account_pattern, $id)) {
+if (empty($pass)) {
     $errors++;
-    $_SESSION["error_id"] = "Invalid ID or Password";
+    $_SESSION["error_name"] = "Invalid ID or Password";
 }
 if ($errors == 0) {
+    unset($_SESSION["error_name"]);
+    unset($_SESSION["error_id"]);
+    unset($_SESSION["error_creation"]);
+
     $newData = [
         'name' => $name,
         'id' => $id,
@@ -35,8 +43,12 @@ if ($errors == 0) {
         $newData['role'] = 'teacher';
     }
 
-    appendToDB($newData);
-    header("location: ../view/" . $newData['role'] . "_dashboard.php");
+    if (appendToDB($newData)) {
+        header("location: ../view/" . $newData['role'] . "_dashboard.php");
+    } else {
+        $_SESSION["error_creation"] = "Account creation failed. Please try again.";
+        header("location: ../view/create-account.php");
+    }
     exit();
 } else {
     header("location: ../view/create-account.php");

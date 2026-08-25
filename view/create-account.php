@@ -15,6 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 <h1>Create your account</h1>
+<?php
+if (isset($_SESSION["error_creation"])) {
+    echo "<p class='error'>" . $_SESSION["error_creation"] . "</p>";
+    unset($_SESSION["error_creation"]);
+}
+?>
 <form onsubmit="return validateDets()" action="../controller/account-creation-handler.php" method="POST">
     <table>
         <tr>
@@ -31,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p id="err_id" class="error"><?php
                     if (isset($_SESSION["error_id"])) {
                         echo $_SESSION["error_id"];
+                        unset($_SESSION["error_id"]);
                     } ?></p>
             </td>
         </tr>
@@ -41,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p id="err_pass" class="error"><?php
                     if (isset($_SESSION["error_name"])) {
                         echo $_SESSION["error_name"];
+                        unset($_SESSION["error_name"]);
                     } ?></p>
             </td>
         </tr>

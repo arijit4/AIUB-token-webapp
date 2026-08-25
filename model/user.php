@@ -13,25 +13,22 @@ class User
 
     public function create_user($fullname, $uni_id, $password, $role): bool
     {
-        $stmt = $this->conn->prepare("INSERT INTO user (uni_id, fullname, password, role) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $fullname, $uni_id, $password, $role);
-        return $stmt->execute();
-    }
-
-    public function getUserById($id)
-    {
-        $stmt = $this->conn->prepare("SELECT * FROM user WHERE id = ?");
-        $stmt->bind_param("s", $id);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
-    }
-
-    public function validateUser($id, $password)
-    {
-        $user = $this->getUserById($id);
-        if ($user && password_verify($password, $user['password'])) {
-            return $user;
+        $already_exists = $this->user_already_exists($uni_id);
+        if (!$already_exists) {
+            $stmt = $this->conn->prepare("INSERT INTO user (uni_id, fullname, password, role) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssss", $uni_id, $fullname, $password, $role);
+            return $stmt->execute();
         }
-        return null;
+        return false;
+    }
+
+    public function user_already_exists($uni_id): bool
+    {
+        $stmt = $this->conn->prepare("SELECT uni_id FROM user WHERE uni_id = ?");
+        $stmt->bind_param("s", $uni_id);
+        $stmt->execute();
+        $user = $stmt->get_result()->fetch_assoc();
+        if ($user) return true;
+        else return false;
     }
 }

@@ -17,7 +17,9 @@ function validateDets() {
     }
 
     if (id === "") {
-        document.getElementById('err_id').innerText = "Password cannot be empty.";
+        document.getElementById('err_id').innerText = "ID cannot be empty.";
+    } else if (!(student_account_pattern.test(id) || teacher_account_pattern.test(id))) {
+        document.getElementById('err_id').innerText = "Invalid ID format";
     } else {
         document.getElementById('err_id').innerText = "";
     }
