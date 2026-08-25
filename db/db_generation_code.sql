@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 25, 2026 at 08:58 PM
+-- Generation Time: Aug 25, 2026 at 09:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,21 +31,22 @@ time_zone = "+00:00";
 
 CREATE TABLE `users`
 (
-    `id`         int(11) NOT NULL,
-    `uni_id`     text     NOT NULL,
-    `fullname`   text     NOT NULL,
-    `password`   text     NOT NULL,
-    `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-    `role`       text     NOT NULL
+    `id`            int(11) NOT NULL,
+    `uni_id`        text     NOT NULL,
+    `fullname`      text     NOT NULL,
+    `password`      text     NOT NULL,
+    `created_at`    datetime NOT NULL DEFAULT current_timestamp(),
+    `role`          text     NOT NULL,
+    `assigned_room` text              DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `uni_id`, `fullname`, `password`, `created_at`, `role`)
-VALUES (5, '24-57775-2', 'arijit', '123', '2026-08-26 00:56:31', 'student'),
-       (6, '2412-2509-2', 'Sajid Uddin', 'abc', '2026-08-26 00:57:33', 'teacher');
+INSERT INTO `users` (`id`, `uni_id`, `fullname`, `password`, `created_at`, `role`, `assigned_room`)
+VALUES (5, '24-57775-2', 'arijit', '123', '2026-08-26 00:56:31', 'student', NULL),
+       (6, '2412-2509-2', 'Sajid Uddin', 'abc', '2026-08-26 00:57:33', 'teacher', NULL);
 
 --
 -- Indexes for dumped tables
