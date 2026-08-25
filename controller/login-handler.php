@@ -2,7 +2,7 @@
 
 session_start();
 /*
- function getUsersFromDB(): array
+function getUsersFromDB(): array
 {
     // read from accounts.json temporarily
     // fetch from the db when available.
@@ -18,6 +18,7 @@ $users = [
 ];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    unset($_SESSION['error_message']);
 
     $id = strtolower(trim($_POST['id']));
     $password = trim($_POST['password']);
@@ -30,13 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['role'] = $user['role'];
 
             if ($user['role'] == 'admin') {
-                header("Location: ../pages/admin/dashboard.php");
+                header("Location: ../view/admin_dashboard.php");
             } else if ($user['role'] == 'student') {
-                header("Location: ../pages/student/dashboard.php");
+                header("Location: ../view/student_dashboard.php");
             } else if ($user['role'] == 'teacher') {
-                header("Location: ../pages/teacher/dashboard.php");
+                header("Location: ../view/teacher_dashboard.php");
             } else if ($user['role'] == 'supervisor') {
-                header("Location: ../pages/supervisor/dashboard.php");
+                header("Location: ../view/supervisor_dashboard.php");
             }
 
             exit();
@@ -45,10 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $_SESSION['error_message'] = "Invalid id or password";
 
-    header("Location: ../../login/login.php");
+    header("Location: ../view/login.php");
     exit();
 } else {
-    header("Location: ../../login/login.php");
+    header("Location: ../view/login.php");
 }
 
 ?>

@@ -5,7 +5,7 @@ if (!isset($_SESSION['id'])) {
     exit();
 }
 if ($_SESSION['role'] != 'student') {
-    header('Location: ./' . $_SESSION['role'] . '/dashboard.php');
+    header('Location: ./' . $_SESSION['role'] . '_dashboard.php');
     exit();
 }
 ?>
@@ -29,7 +29,7 @@ if ($_SESSION['role'] != 'student') {
 <a href="report-absence.php">
     <h3>Report Absence</h3>
 </a>
-<form action="../../login/logout.php" method="post">
+<form action="logout.php" method="post">
     <input type="submit" value="Logout">
 </form>
 </body>
