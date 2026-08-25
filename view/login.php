@@ -2,13 +2,13 @@
 session_start();
 if (isset($_SESSION['id'])) {
     if ($_SESSION['role'] == 'admin') {
-        header("Location: ../pages/admin/dashboard.php");
+        header("Location: ./admin_dashboard.php");
     } else if ($_SESSION['role'] == 'student') {
-        header("Location: ../pages/student/dashboard.php");
+        header("Location: ./student_dashboard.php");
     } else if ($_SESSION['role'] == 'teacher') {
-        header("Location: ../pages/teacher/dashboard.php");
+        header("Location: ./teacher_dashboard.php");
     } else if ($_SESSION['role'] == 'supervisor') {
-        header("Location: ../pages/supervisor/dashboard.php");
+        header("Location: ./supervisor_dashboard.php");
     }
     exit();
 }
@@ -21,18 +21,6 @@ if (isset($_SESSION['id'])) {
 </head>
 <body>
 <h1>Queue Management system </h1>
-<h2>Login to your account</h2>
-<form action="login-handler.php" method="post">
-    ID: <input type="text" id="id" name="id"><br>
-    <br>
-    Password: <input type="password" id="password" name="password"><br>
-    <br>
-    <input type="submit" value="Login">
-    <br><br>
-    <p class="register-text">Don't have an account?
-        <a href="../account_creation/createAccount.php">Create an account</a>
-    </p>
-</form>
 
 <?php if (isset($_SESSION['error_message'])): ?>
     <script>
@@ -40,6 +28,19 @@ if (isset($_SESSION['id'])) {
     </script>
     <?php unset($_SESSION['error_message']); ?>
 <?php endif; ?>
+<h2>Login to your account</h2>
+<form action="../controller/login-handler.php" method="post">
+    ID: <input type="text" id="id" name="id"><br>
+    <br>
+    Password: <input type="password" id="password" name="password"><br>
+    <br>
+    <input type="submit" value="Login">
+    <br><br>
+    <p class="register-text">Don't have an account?
+        <a href="create-account.php">Create an account</a>
+    </p>
+</form>
+
 
 </body>
 </html>

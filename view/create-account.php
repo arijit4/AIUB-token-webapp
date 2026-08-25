@@ -1,20 +1,21 @@
 <?php
-# should add session codes here...
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<h1>Account created successfully</h1>";
-    header('Location: ../dashboard/dashboard.php');
+    header('Location: ../dashboard/admin_dashboard.php');
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Create account</title>
-    <script src="validation_helper.js"></script>
+    <script src="../account_creation/validation_helper.js"></script>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 <h1>Create your account</h1>
-<form onsubmit="return validateDets()" action="./creationHandler.php" method="POST">
+<form onsubmit="return validateDets()" action="../controller/account-creation-handler.php" method="POST">
     <table>
         <tr>
             <td><label for="name">Name</label></td>
@@ -27,14 +28,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <td><label for="id">ID</label></td>
             <td>: <input type="text" name="id" id="id" placeholder="24-57775-2"></td>
             <td>
-                <p id="err_id" class="error"></p>
+                <p id="err_id" class="error"><?php
+                    if (isset($_SESSION["error_id"])) {
+                        echo $_SESSION["error_id"];
+                    } ?></p>
             </td>
         </tr>
         <tr>
             <td><label for="pass">Password</label></td>
             <td>: <input type="password" name="pass" id="pass" placeholder="123"></td>
             <td>
-                <p id="err_pass" class="error"></p>
+                <p id="err_pass" class="error"><?php
+                    if (isset($_SESSION["error_name"])) {
+                        echo $_SESSION["error_name"];
+                    } ?></p>
             </td>
         </tr>
         <tr>

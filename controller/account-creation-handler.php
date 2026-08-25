@@ -1,4 +1,5 @@
 <?php
+session_start();
 function appendToDB($data): void
 {
     $currentData = [];
@@ -28,8 +29,13 @@ $errors = 0;
 $student_account_pattern = '/^\d{2}-\d{5}-[1-3]$/';
 $teacher_account_pattern = '/^\d{4}-\d{4}-[1-3]$/';
 
+if ($id == "") {
+    $errors++;
+    $_SESSION["error_id"] = "Invalid ID or Password";
+}
 if (!preg_match($student_account_pattern, $id) && !preg_match($teacher_account_pattern, $id)) {
     $errors++;
+    $_SESSION["error_id"] = "Invalid ID or Password";
 }
 if ($errors == 0) {
     $newData = [
@@ -43,8 +49,9 @@ if ($errors == 0) {
     }
 
     appendToDB($newData);
-
-    header("location: ../pages/admin/dashboard.php");
+    header("location: ../view/" . $newData['role'] . "_dashboard.php");
+    exit();
 } else {
-    header("location: ./createAccount.php");
+    header("location: ../view/create-account.php");
+    exit();
 }
