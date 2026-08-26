@@ -1,6 +1,5 @@
 <?php
 include_once "../db/db_connection.php";
-include_once "../model/rooms.php";
 
 class tokens
 {
@@ -12,17 +11,10 @@ class tokens
         $this->conn = $dbcon->connect();
     }
 
-    public function generateToken(int $user_id): int|false
+    public function generateToken(int $user_id, int $room_id): int|false
     {
         $already_exists = $this->token_already_exists($user_id);
         if (!$already_exists) {
-            $room_model = new Rooms();
-            $room = $room_model->get_first_empty_room();
-            if (!$room) {
-                return false;
-            }
-
-            $room_id = (int)$room['id'];
             $stmt = $this->conn->prepare("INSERT INTO token (user_id, room_id) VALUES (?, ?)");
             $stmt->bind_param("ii", $user_id, $room_id);
 
