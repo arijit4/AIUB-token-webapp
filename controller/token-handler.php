@@ -1,5 +1,5 @@
 <?php
-require_once "../model/tokens.php";
+require_once "../model/Tokens.php";
 require_once "../model/rooms.php";
 session_start();
 
@@ -14,7 +14,7 @@ if (($_SESSION['role'] ?? '') !== 'student') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_token'])) {
-    $token_model = new tokens();
+    $token_model = new Tokens();
     $room_id = new rooms();
     $room_id = $room_id->get_first_empty_room();
     if($room_id === false) {

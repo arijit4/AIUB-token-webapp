@@ -9,3 +9,41 @@ input[type="submit"] {
     border: white 0 solid;
     border-radius: 10px;
 }
+
+.display-span {
+    display: inline-block;
+    width: 180px;
+    text-align: left;
+    margin-right: 10px
+}
+
+.width-full {
+    width: 100%;
+}
+
+.app-table {
+    border-collapse: collapse;
+    border: 2px solid #003366;
+    width: 50%;
+}
+
+th {
+    border: 2px solid gray;
+    background-color: #003366;
+    color: white;
+    padding: 6px 10px;
+}
+
+.app-table td {
+    border: 2px solid #003366;
+    padding: 6px 10px;
+}
+
+.app-table caption {
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+}
+

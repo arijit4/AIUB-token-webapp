@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2026 at 10:09 AM
+-- Generation Time: Aug 26, 2026 at 02:56 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `rooms`
 
 INSERT INTO `rooms` (`id`, `name`, `capacity`, `current_load`, `supervisor_id`)
 VALUES (1, 'DN0901', 300, 0, 7),
-       (2, 'DN0902', 300, 0, 8);
+       (4, 'DN0902', 300, 12, 8);
 
 -- --------------------------------------------------------
 
@@ -63,7 +63,7 @@ CREATE TABLE `teacher_assignment`
 --
 
 INSERT INTO `teacher_assignment` (`user_id`, `room_id`)
-VALUES (6, 2);
+VALUES (6, 1);
 
 -- --------------------------------------------------------
 
@@ -86,8 +86,8 @@ CREATE TABLE `token`
 --
 
 INSERT INTO `token` (`token_id`, `user_id`, `room_id`, `status`, `created_at`, `updated_at`)
-VALUES (1, 24, 1, 'Waiting', '2026-08-26 14:01:41', NULL),
-       (2, 9, 1, 'Waiting', '2026-08-26 14:09:03', NULL);
+VALUES (1, 5, 1, 'Waiting', '2026-08-26 14:01:41', '2026-08-26 18:52:26'),
+       (2, 9, 4, 'Waiting', '2026-08-26 14:09:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -112,7 +112,7 @@ CREATE TABLE `users`
 
 INSERT INTO `users` (`id`, `uni_id`, `fullname`, `password`, `created_at`, `role`, `assigned_room`)
 VALUES (5, '24-57775-2', 'arijit', '123', '2026-08-26 00:56:31', 'student', NULL),
-       (6, '2412-2509-2', 'Sajid Uddin', 'abc', '2026-08-26 00:57:33', 'teacher', NULL),
+       (6, '1111-1111-1', 'Sajid Uddin', 'abc', '2026-08-26 00:57:33', 'teacher', '1'),
        (7, '3333-3333-2', 'Dr. Mahfuza Khatun', 'abc', '2026-08-26 00:57:33', 'supervisor', NULL),
        (8, '3333-4444-2', 'Md. Asaduzzaman Khan', 'abc', '2026-08-26 00:57:33', 'supervisor', NULL),
        (9, '24-57745-2', 'adila', '123', '2026-08-26 14:03:25', 'student', NULL);
@@ -132,14 +132,16 @@ ALTER TABLE `rooms`
 -- Indexes for table `teacher_assignment`
 --
 ALTER TABLE `teacher_assignment`
-    ADD KEY `fk_user_id_room_ass` (`user_id`),
-  ADD KEY `fk_room_id_room_ass` (`room_id`);
+    ADD UNIQUE KEY `user_id` (`user_id`),
+    ADD KEY `fk_room_id_room_ass` (`room_id`);
 
 --
 -- Indexes for table `token`
 --
 ALTER TABLE `token`
-    ADD PRIMARY KEY (`token_id`);
+    ADD PRIMARY KEY (`token_id`),
+  ADD UNIQUE KEY `user_id` (`user_id`),
+  ADD KEY `fk_room_id_token` (`room_id`);
 
 --
 -- Indexes for table `users`
@@ -156,7 +158,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-    MODIFY `id` int (11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+    MODIFY `id` int (11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `token`
@@ -186,6 +188,12 @@ ALTER TABLE `rooms`
 ALTER TABLE `teacher_assignment`
     ADD CONSTRAINT `fk_room_id_room_ass` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`),
   ADD CONSTRAINT `fk_user_id_room_ass` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `token`
+--
+ALTER TABLE `token`
+    ADD CONSTRAINT `fk_room_id_token` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
