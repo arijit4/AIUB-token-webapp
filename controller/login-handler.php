@@ -1,52 +1,35 @@
 <?php
-
+require_once "../model/user.php";
 session_start();
-/*
-function getUsersFromDB(): array
+
+function verifyLogin($uni_id, $password): bool
 {
-    // read from accounts.json temporarily
-    // fetch from the db when available.
+    $user = new User();
+    return $user->verify_login($uni_id, $password);
 }
 
-$users = getUsersFromDB();
- * */
-$users = [
-    ["id" => "1", "password" => "123", "role" => "admin"],
-    ["id" => "2", "password" => "456", "role" => "student"],
-    ["id" => "3", "password" => "789", "role" => "teacher"],
-    ["id" => "4", "password" => "1234", "role" => "supervisor"]
-];
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    unset($_SESSION['id']);
+    unset($_SESSION['name']);
+    unset($_SESSION['role']);
     unset($_SESSION['error_message']);
 
-    $id = strtolower(trim($_POST['id']));
+    $uni_id = strtolower(trim($_POST['id']));
     $password = trim($_POST['password']);
 
-    foreach ($users as $user) {
+    if (verifyLogin($uni_id, $password)) {
+        $user_model = new User();
+        $user = $user_model->get_user($uni_id);
+        
+        $_SESSION['id'] = $uni_id;
+        $_SESSION['name'] = $user['fullname'];
+        $_SESSION['role'] = $user['role'];
 
-        if ($user['id'] == $id && $user['password'] == $password) {
-
-            $_SESSION['id'] = $user['id'];
-            $_SESSION['role'] = $user['role'];
-
-            if ($user['role'] == 'admin') {
-                header("Location: ../view/admin_dashboard.php");
-            } else if ($user['role'] == 'student') {
-                header("Location: ../view/student_dashboard.php");
-            } else if ($user['role'] == 'teacher') {
-                header("Location: ../view/teacher_dashboard.php");
-            } else if ($user['role'] == 'supervisor') {
-                header("Location: ../view/supervisor_dashboard.php");
-            }
-
-            exit();
-        }
+        header("Location: ../view/" . $user['role'] . "_dashboard.php");
+    } else {
+        $_SESSION['error_message'] = "Invalid id or password";
+        header("Location: ../view/login.php");
     }
-
-    $_SESSION['error_message'] = "Invalid id or password";
-
-    header("Location: ../view/login.php");
     exit();
 } else {
     header("Location: ../view/login.php");
