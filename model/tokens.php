@@ -11,7 +11,7 @@ class tokens
         $this->conn = $dbcon->connect();
     }
 
-    public function generateToken(int $user_id, int $room_id = 1): int|false
+    public function generateToken(int $user_id, int $room_id): int|false
     {
         $already_exists = $this->token_already_exists($user_id);
         if (!$already_exists) {
@@ -26,7 +26,7 @@ class tokens
     }
     public function token_already_exists(int $user_id): bool
     {
-        $stmt = $this->conn->prepare("SELECT id FROM token WHERE user_id = ?");
+        $stmt = $this->conn->prepare("SELECT user_id FROM token WHERE user_id = ?");
         $stmt->bind_param("i", $user_id);
         $stmt->execute();
         $token = $stmt->get_result()->fetch_assoc();

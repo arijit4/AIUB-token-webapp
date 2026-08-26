@@ -21,7 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $user_model = new Users();
         $user = $user_model->get_user($uni_id);
         
-        $_SESSION['id'] = $uni_id;
+        $_SESSION['id'] = $user['id'];
+        $_SESSION['uni_id'] = $user['uni_id'];
         $_SESSION['name'] = $user['fullname'];
         $_SESSION['role'] = $user['role'];
 
