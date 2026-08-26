@@ -14,7 +14,7 @@ if (($_SESSION['role'] ?? '') !== 'student') {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_token'])) {
     $token_model = new tokens();
-    $token_id = $token_model->generateToken((int)$_SESSION['id'], 1);
+    $token_id = $token_model->generateToken((int)$_SESSION['id']);
 
     if ($token_id !== false) {
         $_SESSION['token_id'] = $token_id;
