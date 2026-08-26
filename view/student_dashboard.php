@@ -17,7 +17,7 @@ if ($_SESSION['role'] != 'student') {
     <title>Student's Dashboard</title>
 </head>
 <body>
-<h1>Hello student, <?php echo $_SESSION['username'] ?></h1>
+<h1>Hello student, <?php echo $_SESSION['name'] ?></h1>
 <a href="token_view.php">
     <h3>Apply for Token</h3>
 </a>
