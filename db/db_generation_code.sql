@@ -3,15 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2026 at 08:57 AM
+-- Generation Time: Aug 26, 2026 at 09:06 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
-SET
-SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET
-time_zone = "+00:00";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -29,22 +27,36 @@ time_zone = "+00:00";
 -- Table structure for table `rooms`
 --
 
-CREATE TABLE `rooms`
-(
-    `id`            int(11) NOT NULL,
-    `name`          text NOT NULL,
-    `capacity`      int(11) NOT NULL,
-    `current_load`  int(11) NOT NULL DEFAULT 0,
-    `supervisor_id` int(11) NOT NULL
+CREATE TABLE `rooms` (
+                         `id` int(11) NOT NULL,
+                         `name` text NOT NULL,
+                         `capacity` int(11) NOT NULL,
+                         `current_load` int(11) NOT NULL DEFAULT 0,
+                         `supervisor_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `rooms`
 --
 
-INSERT INTO `rooms` (`id`, `name`, `capacity`, `current_load`, `supervisor_id`)
-VALUES (1, 'DN0901', 300, 0, 7),
-       (2, 'DN0902', 300, 0, 8);
+INSERT INTO `rooms` (`id`, `name`, `capacity`, `current_load`, `supervisor_id`) VALUES
+                                                                                    (1, 'DN0901', 300, 0, 7),
+                                                                                    (2, 'DN0902', 300, 0, 8);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `token`
+--
+
+CREATE TABLE `token` (
+                         `token_id` int(11) NOT NULL,
+                         `user_id` int(11) NOT NULL,
+                         `room_id` int(11) NOT NULL,
+                         `status` enum('Waiting','Completed','Missed') NOT NULL DEFAULT 'Waiting',
+                         `created_at` datetime DEFAULT current_timestamp(),
+                         `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -52,26 +64,25 @@ VALUES (1, 'DN0901', 300, 0, 7),
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users`
-(
-    `id`            int(11) NOT NULL,
-    `uni_id`        text     NOT NULL,
-    `fullname`      text     NOT NULL,
-    `password`      text     NOT NULL,
-    `created_at`    datetime NOT NULL DEFAULT current_timestamp(),
-    `role`          text     NOT NULL,
-    `assigned_room` text              DEFAULT NULL
+CREATE TABLE `users` (
+                         `id` int(11) NOT NULL,
+                         `uni_id` text NOT NULL,
+                         `fullname` text NOT NULL,
+                         `password` text NOT NULL,
+                         `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+                         `role` text NOT NULL,
+                         `assigned_room` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `uni_id`, `fullname`, `password`, `created_at`, `role`, `assigned_room`)
-VALUES (5, '24-57775-2', 'arijit', '123', '2026-08-26 00:56:31', 'student', NULL),
-       (6, '2412-2509-2', 'Sajid Uddin', 'abc', '2026-08-26 00:57:33', 'teacher', NULL),
-       (7, '3333-3333-2', 'Dr. Mahfuza Khatun', 'abc', '2026-08-26 00:57:33', 'supervisor', NULL),
-       (8, '3333-4444-2', 'Md. Asaduzzaman Khan', 'abc', '2026-08-26 00:57:33', 'supervisor', NULL);
+INSERT INTO `users` (`id`, `uni_id`, `fullname`, `password`, `created_at`, `role`, `assigned_room`) VALUES
+                                                                                                        (5, '24-57775-2', 'arijit', '123', '2026-08-26 00:56:31', 'student', NULL),
+                                                                                                        (6, '2412-2509-2', 'Sajid Uddin', 'abc', '2026-08-26 00:57:33', 'teacher', NULL),
+                                                                                                        (7, '3333-3333-2', 'Dr. Mahfuza Khatun', 'abc', '2026-08-26 00:57:33', 'supervisor', NULL),
+                                                                                                        (8, '3333-4444-2', 'Md. Asaduzzaman Khan', 'abc', '2026-08-26 00:57:33', 'supervisor', NULL);
 
 --
 -- Indexes for dumped tables
@@ -83,6 +94,12 @@ VALUES (5, '24-57775-2', 'arijit', '123', '2026-08-26 00:56:31', 'student', NULL
 ALTER TABLE `rooms`
     ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `supervisor_id` (`supervisor_id`);
+
+--
+-- Indexes for table `token`
+--
+ALTER TABLE `token`
+    ADD PRIMARY KEY (`token_id`);
 
 --
 -- Indexes for table `users`
@@ -99,13 +116,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-    MODIFY `id` int (11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `token`
+--
+ALTER TABLE `token`
+    MODIFY `token_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-    MODIFY `id` int (11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

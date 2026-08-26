@@ -20,7 +20,7 @@ if (isset($_SESSION['id'])) {
     <link rel="stylesheet" type="text/css" href="../style.css">
 </head>
 <body>
-<h1>Queue Management system </h1>
+<h1>Token Management system </h1>
 
 <?php if (isset($_SESSION['error_message'])): ?>
     <script>
