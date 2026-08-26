@@ -1,7 +1,7 @@
 <?php
 require_once "../db/db_connection.php";
 
-class User
+class Users
 {
     private $conn;
 

@@ -1,10 +1,10 @@
 <?php
-require_once "../model/user.php";
+require_once "../model/users.php";
 session_start();
 
 function verifyLogin($uni_id, $password): bool
 {
-    $user = new User();
+    $user = new Users();
     return $user->verify_login($uni_id, $password);
 }
 
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = trim($_POST['password']);
 
     if (verifyLogin($uni_id, $password)) {
-        $user_model = new User();
+        $user_model = new Users();
         $user = $user_model->get_user($uni_id);
         
         $_SESSION['id'] = $uni_id;

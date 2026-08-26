@@ -1,9 +1,9 @@
 <?php
-require_once "../model/user.php";
+require_once "../model/users.php";
 session_start();
 function appendToDB($data): bool
 {
-    $user = new User();
+    $user = new Users();
     return $user->create_user($data['name'], $data['id'], $data['pass'], $data['role']);
 }
 
