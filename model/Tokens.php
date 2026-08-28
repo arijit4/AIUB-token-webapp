@@ -42,11 +42,27 @@ class Tokens
 
     public function token_already_exists(int $user_id): bool
     {
-        $stmt = $this->conn->prepare("SELECT user_id FROM token WHERE user_id = ?");
+        $stmt = $this->conn->prepare("SELECT user_id FROM token WHERE user_id = ? AND status = 'Waiting'");
         $stmt->bind_param("i", $user_id);
         $stmt->execute();
         $token = $stmt->get_result()->fetch_assoc();
         return (bool)$token;
+    }
+
+    public function get_waiting_token_for_user(int $user_id): false|array|null
+    {
+        $stmt = $this->conn->prepare("SELECT token_id FROM token WHERE user_id = ? AND status = 'Waiting' ORDER BY token_id DESC LIMIT 1");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+    public function get_waiting_token_for_uni_id(string $uni_id): false|array|null
+    {
+        $stmt = $this->conn->prepare("SELECT t.token_id FROM token t JOIN users u ON t.user_id = u.id WHERE u.uni_id = ? AND t.status = 'Waiting' ORDER BY t.token_id DESC LIMIT 1");
+        $stmt->bind_param("s", $uni_id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
     }
 
     public function teacher_view_tokens($room_id): false|array|null
