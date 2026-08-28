@@ -41,7 +41,7 @@ if (!$associated_room_id) {
     echo $tg->generate_table(
             $tc,
             "Students being served at different rooms:",
-            ['Room ID', 'Room Name', 'Number of students waiting']
+            ['Room Name', 'Number of students waiting']
     );
 
 }
