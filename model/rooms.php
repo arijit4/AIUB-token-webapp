@@ -28,7 +28,7 @@ class Rooms
     public function get_number_of_tokens_in_each_room(): false|array|null
     {
         $stmt = $this->conn->prepare("
-           SELECT r.id AS room_id, r.name AS room_name, COUNT(t.token_id) AS token_count
+           SELECT r.name AS room_name, COUNT(t.token_id) AS token_count
            FROM rooms r LEFT JOIN token t ON r.id = t.room_id AND t.status = 'Waiting'
            GROUP BY r.id, r.name;
         ");
