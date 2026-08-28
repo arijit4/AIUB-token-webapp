@@ -1,11 +1,20 @@
 <?php
 session_start();
+include_once "../model/tokens.php";
 if (!isset($_SESSION['id'])) {
     header("Location: ./login.php");
     exit();
 }
 $message = $_SESSION['error_message'] ?? '';
 $token_id = $_GET['token_id'] ?? ($_SESSION['token_id'] ?? null);
+if(!$token_id) {
+    $token_model = new Tokens();
+    $waiting_token = $token_model->get_waiting_token_for_user((int)$_SESSION['id']);
+    if ($waiting_token) {
+        $token_id = (int)$waiting_token['token_id'];
+        $_SESSION['token_id'] = $token_id;
+    }
+}
 unset($_SESSION['error_message']);
 ?>
 <html lang="en">
@@ -23,16 +32,23 @@ unset($_SESSION['error_message']);
     </p>
 <?php endif; ?>
 
-<?php if ($token_id): ?>
+<?php if (isset($token_id)): ?>
     <p>
         Your token has been created. Please note your token number:
         <strong><?php echo "#T-" . $token_id; ?></strong>
     </p>
 <?php endif; ?>
 
+
+
 <form action="../controller/token-handler.php" method="POST">
-    <button type="submit" name="generate_token">Generate Token</button>
+
+    <input type="submit" <?php
+    $token_model = new Tokens();
+    $token_exists = $token_model->token_already_exists($_SESSION['id']);
+    if($token_exists) echo 'style="visibility: hidden;"' ?>value="Generate Token" name="generate_token"></input>
 </form>
+
 
 <p><a href="student_dashboard.php">Back to Dashboard</a></p>
 

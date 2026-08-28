@@ -8,7 +8,7 @@ if (!isset($_SESSION['id'])) {
     exit();
 }
 
-if (($_SESSION['role'] ?? '') !== 'student') {
+if ($_SESSION['role'] !== 'student') {
     header("Location: ../view/login.php");
     exit();
 }
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_token'])) {
     if ($existing_waiting_token) {
         $_SESSION['error_message'] = 'You already have an active token.';
         $_SESSION['token_id'] = (int)$existing_waiting_token['token_id'];
-        header("Location: ../view/token_view.php?token_id=" . (int)$existing_waiting_token['token_id']);
+        header("Location: ../view/token_view.php?token_id=");
         exit();
     }
 
@@ -31,11 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_token'])) {
         exit();
     }
 
+
     $token_id = $token_model->generateToken((int)$_SESSION['id'], (int)$room_data['id']);
 
     if ($token_id !== false) {
         $_SESSION['token_id'] = $token_id;
-        header("Location: ../view/token_view.php?token_id=" . $token_id);
+        header("Location: ../view/token_view.php");
     } else {
         $_SESSION['error_message'] = 'Token generation failed.';
         header("Location: ../view/token_view.php");

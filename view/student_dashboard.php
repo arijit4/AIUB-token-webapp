@@ -19,6 +19,7 @@ if ($_SESSION['role'] != 'student') {
 <body>
 <h1>Hello, <?php echo $_SESSION['name'] ?></h1>
 
+
 <?php if (isset($_SESSION['status_message'])): ?>
     <p><?php echo htmlspecialchars($_SESSION['status_message']); ?></p>
     <?php unset($_SESSION['status_message']); ?>
