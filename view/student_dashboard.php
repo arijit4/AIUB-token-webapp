@@ -17,7 +17,18 @@ if ($_SESSION['role'] != 'student') {
     <title>Student's Dashboard</title>
 </head>
 <body>
-<h1>Hello student, <?php echo $_SESSION['name'] ?></h1>
+<h1>Hello, <?php echo $_SESSION['name'] ?></h1>
+
+<?php if (isset($_SESSION['status_message'])): ?>
+    <p><?php echo htmlspecialchars($_SESSION['status_message']); ?></p>
+    <?php unset($_SESSION['status_message']); ?>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['error_message'])): ?>
+    <p class="error"><?php echo htmlspecialchars($_SESSION['error_message']); ?></p>
+    <?php unset($_SESSION['error_message']); ?>
+<?php endif; ?>
+
 <a href="token_view.php">
     <h3>Apply for Token</h3>
 </a>
@@ -26,7 +37,7 @@ if ($_SESSION['role'] != 'student') {
     <h3>Monitor Queue</h3>
 </a>
 
-<a href="report-absence.php">
+<a href="../controller/report_handler.php">
     <h3>Report Absence</h3>
 </a>
 <form action="logout.php" method="post">

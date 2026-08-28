@@ -36,7 +36,7 @@ class Rooms
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function get_room_associated_with_teacher($teacher_id): false|array|null
+    public function get_room_associated_with_teacher(int $teacher_id): false|array|null
     {
         $stmt = $this->conn->prepare("SELECT * FROM teacher_assignment WHERE user_id = ?");
         $stmt->bind_param("i", $teacher_id);
