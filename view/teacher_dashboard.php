@@ -47,10 +47,14 @@ if ($_SESSION['role'] != 'teacher') {
     echo "<h2> Hi, " . $user['fullname'] . '</h2>';
 
     $room_model = new Rooms();
-    $associated_room_id = $room_model->get_room_associated_with_teacher($_SESSION['id'])['room_id'];
+    $associated_room = $room_model->get_room_associated_with_teacher($_SESSION['id']);
+    $associated_room_id = $associated_room['room_id'];
     if (!$associated_room_id) {
         echo "<p>You are not assigned to any room yet. Please contact the admin.</p>";
     } else {
+        $current_room = $room_model->get_room_by_id($associated_room_id)['name'];
+        echo "<p>You are assigned to " . $current_room . ".</p>";
+
         $room_details = $room_model->get_all_rooms();
         $tc = $room_model->get_number_of_tokens_in_each_room();
         $tg = new TableGenerator();
