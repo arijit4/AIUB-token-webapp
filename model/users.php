@@ -127,4 +127,63 @@ class Users
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+ public function get_all_users(): false|array|null
+{
+    $stmt = $this->conn->prepare("SELECT id, uni_id, fullname, role, created_at FROM users ORDER BY role, fullname");
+    $stmt->execute();
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
+
+public function get_user_by_id(int $id): false|array|null
+{
+    $stmt = $this->conn->prepare("SELECT * FROM users WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_assoc();
+}
+
+public function update_user_full(int $id, string $fullname, string $uni_id, string $role, string $password = null): bool
+{
+    if ($password !== null && $password !== '') {
+        $stmt = $this->conn->prepare("UPDATE users SET fullname = ?, uni_id = ?, role = ?, password = ? WHERE id = ?");
+        $stmt->bind_param("ssssi", $fullname, $uni_id, $role, $password, $id);
+    } else {
+        $stmt = $this->conn->prepare("UPDATE users SET fullname = ?, uni_id = ?, role = ? WHERE id = ?");
+        $stmt->bind_param("sssi", $fullname, $uni_id, $role, $id);
+    }
+    return $stmt->execute();
+}
+
+public function delete_user(int $id): bool
+{
+    $check = $this->conn->prepare("SELECT id FROM rooms WHERE supervisor_id = ?");
+    $check->bind_param("i", $id);
+    $check->execute();
+    if ($check->get_result()->fetch_assoc()) {
+        return false;
+    }
+
+    $stmt = $this->conn->prepare("DELETE FROM users WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    return $stmt->execute();
+}
+
+public function get_all_supervisors(): false|array|null
+{
+    $stmt = $this->conn->prepare("SELECT id, uni_id, fullname FROM users WHERE role = 'supervisor'");
+    $stmt->execute();
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
+
+public function get_unassigned_supervisors(): false|array|null
+{
+    $stmt = $this->conn->prepare("
+        SELECT u.id, u.uni_id, u.fullname
+        FROM users u
+        LEFT JOIN rooms r ON u.id = r.supervisor_id
+        WHERE u.role = 'supervisor' AND r.supervisor_id IS NULL
+    ");
+    $stmt->execute();
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
 }
