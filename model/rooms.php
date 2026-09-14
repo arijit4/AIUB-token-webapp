@@ -83,16 +83,13 @@ class Rooms
         $stmt->bind_param("ii", $teacher_id, $room_id);
         return $stmt->execute();
     }
-    // ========== ADD THESE METHODS INSIDE class Rooms ==========
-
-public function create_room(string $name, int $capacity, int $supervisor_id): bool
+ public function create_room(string $name, int $capacity, int $supervisor_id): bool
 {
-    // Check if supervisor is already assigned to another room
     $check = $this->conn->prepare("SELECT id FROM rooms WHERE supervisor_id = ?");
     $check->bind_param("i", $supervisor_id);
     $check->execute();
     if ($check->get_result()->fetch_assoc()) {
-        return false; // Supervisor already has a room
+        return false;
     }
 
     $stmt = $this->conn->prepare("INSERT INTO rooms (name, capacity, current_load, supervisor_id) VALUES (?, ?, 0, ?)");
@@ -109,12 +106,11 @@ public function update_room(int $id, string $name, int $capacity, int $superviso
 
 public function delete_room(int $id): bool
 {
-    // First check if room has waiting tokens
     $check = $this->conn->prepare("SELECT token_id FROM token WHERE room_id = ? AND status = 'Waiting'");
     $check->bind_param("i", $id);
     $check->execute();
     if ($check->get_result()->fetch_assoc()) {
-        return false; // Cannot delete room with active tokens
+        return false;
     }
 
     $stmt = $this->conn->prepare("DELETE FROM rooms WHERE id = ?");
