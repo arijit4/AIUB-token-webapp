@@ -41,7 +41,7 @@ $user = $user_model->get_user($_SESSION['uni_id']);
                 <td><input type="password" id="password" name="password" required></td>
             </tr>
             <tr>
-                <td><label for="cpassword">Confirm New Password</label></td>
+                <td><label for="cpassword">Confirm Password</label></td>
                 <td><input type="password" id="cpassword" name="cpassword" required></td>
             </tr>
             <tr>

@@ -8,16 +8,13 @@ if (!isset($_SESSION['id'])) {
 }
 
 if (($_SESSION['role'] ?? '') !== 'student') {
-    header("Location: ../index.php");
+    header("Location: ../view/" . $_SESSION['role'] . "_dashboard.php");
     exit();
 }
 
 $token_model = new Tokens();
 $current_token = null;
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['current_token'])) {
-    $current_token = (int)$_POST['current_token'];
-} else {
     $waiting_token = $token_model->get_waiting_token_for_user((int)$_SESSION['id']);
     if (!$waiting_token && isset($_SESSION['uni_id'])) {
         $waiting_token = $token_model->get_waiting_token_for_uni_id((string)$_SESSION['uni_id']);
@@ -25,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['current_token'])) {
     if ($waiting_token) {
         $current_token = (int)$waiting_token['token_id'];
     }
-}
 
 if (!$current_token) {
     $_SESSION['error_message'] = "No active waiting token found to report.";

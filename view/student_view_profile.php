@@ -21,11 +21,11 @@ if ($_SESSION['role'] != 'student') {
             <th colspan="2">Identity verification</th>
         </tr>
         <tr>
-            <td>Student Name </td>
+            <td>Student Name</td>
             <td><?php echo htmlspecialchars($_SESSION['name']); ?></td>
         </tr>
         <tr>
-            <td>Student ID </td>
+            <td>Student ID</td>
             <td><?php echo htmlspecialchars($_SESSION['uni_id']); ?></td>
         </tr>
     </table>
