@@ -127,9 +127,7 @@ class Users
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
-    // ========== ADD THESE METHODS INSIDE class Users ==========
-
-public function get_all_users(): false|array|null
+ public function get_all_users(): false|array|null
 {
     $stmt = $this->conn->prepare("SELECT id, uni_id, fullname, role, created_at FROM users ORDER BY role, fullname");
     $stmt->execute();
@@ -158,7 +156,6 @@ public function update_user_full(int $id, string $fullname, string $uni_id, stri
 
 public function delete_user(int $id): bool
 {
-    // Prevent deleting if user is a supervisor of a room
     $check = $this->conn->prepare("SELECT id FROM rooms WHERE supervisor_id = ?");
     $check->bind_param("i", $id);
     $check->execute();
